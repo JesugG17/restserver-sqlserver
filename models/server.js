@@ -1,5 +1,7 @@
 const express = require('express');
 const cors = require('cors');
+const sql = require('mssql');
+const { sqlConfig } = require('../database/conectar-db');
 class Server {
     
 
@@ -15,8 +17,9 @@ class Server {
 
         this.routes();
 
-    }
+        sql.connect( sqlConfig );
 
+    }
 
     middlewares(){
 
@@ -37,7 +40,6 @@ class Server {
         });
     }
      
-    
 }
 
 
