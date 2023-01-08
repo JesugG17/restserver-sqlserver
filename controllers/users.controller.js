@@ -26,7 +26,7 @@ const crearUsuario = async(req = request, res = response) => {
 const obtenerUsuarios = async(req = request, res = response) => {
 
     const { recordset, rowsAffected } = await sql.query('SELECT * FROM USUARIOS');
-    
+
     const results = {
         total: rowsAffected[0],
         results: recordset
@@ -36,6 +36,16 @@ const obtenerUsuarios = async(req = request, res = response) => {
 }
 
 const obtenerUsuario = async(req = request, res = response) => {
+
+    const id = req.params.id;
+
+    const { recordset } = await sql.query(`SELECT * FROM Usuarios WHERE id = ${ id }`);
+
+    const result = {
+        result: recordset[0]
+    }
+
+    res.json( result );
 
 }
 
