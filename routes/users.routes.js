@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const { check } = require('express-validator');
-const { crearUsuario, obtenerUsuarios, obtenerUsuario, actualizarUsuario } = require('../controllers/users.controller');
+const { crearUsuario, obtenerUsuarios, obtenerUsuario, actualizarUsuario, borrarUsuario } = require('../controllers/users.controller');
 const { existeCorreo, existeIdUsuario } = require('../helpers/validators');
 const { validarCampos } = require('../middlewares/validar-campos');
 const router = Router();
@@ -29,6 +29,9 @@ router.put('/:id', [
     validarCampos
 ], actualizarUsuario);
 
-router.delete('/:id');
+router.delete('/:id', [
+    check('id').custom(existeIdUsuario),
+    validarCampos
+],borrarUsuario);
 
 module.exports = router;

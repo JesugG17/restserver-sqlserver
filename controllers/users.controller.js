@@ -53,21 +53,29 @@ const actualizarUsuario = async(req = request, res = response) => {
 
     const { nombre, correo } = req.body;
     const id = req.params.id;
-    // console.log("CONTROLADOR");
 
-    let query = `UPDATE Usuarios SET nombre='${ nombre }', correo='${correo}' WHERE id=${ id }`;
+    const query = `UPDATE Usuarios SET nombre='${ nombre }', correo='${correo}' WHERE id=${ id }`;
     await sql.query( query );
     const { recordset } = await sql.query(`SELECT * FROM Usuarios WHERE id=${ id }`);
-
-    // console.log( data );
-
 
     res.json( recordset );
 
 }
 
 const borrarUsuario = async(req = request, res = response) => {
+    const id = req.params.id;
 
+    const query = `DELETE FROM Usuarios WHERE id=${ id }`;
+
+    const [{recordset}] = await Promise.all([
+        await sql.query(`SELECT * FROM Usuarios WHERE id=${ id }`),
+        await sql.query( query )
+    ])
+
+    // console.log( data );
+
+
+    res.json( recordset );
 }
 
 module.exports = {
