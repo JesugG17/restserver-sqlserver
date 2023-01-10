@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const { check } = require('express-validator');
-const { crearUsuario, obtenerUsuarios, obtenerUsuario } = require('../controllers/users.controller');
+const { crearUsuario, obtenerUsuarios, obtenerUsuario, actualizarUsuario } = require('../controllers/users.controller');
 const { existeCorreo, existeIdUsuario } = require('../helpers/validators');
 const { validarCampos } = require('../middlewares/validar-campos');
 const router = Router();
@@ -21,7 +21,12 @@ router.post('/',[
     validarCampos
 ],crearUsuario);
 
-router.put('/:id');
+router.put('/:id', [
+    check('id').custom(existeIdUsuario),
+    check('correo', 'No es un correo valido').isEmail(),
+    check('correo').custom( existeCorreo ),
+    validarCampos
+], actualizarUsuario);
 
 router.delete('/:id');
 

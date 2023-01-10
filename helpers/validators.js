@@ -1,4 +1,3 @@
-const { sqlConfig } = require('../database/conectar-db');
 const sql = require('mssql');
 
 const existeCorreo = async( correo = '' ) => {

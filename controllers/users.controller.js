@@ -51,6 +51,27 @@ const obtenerUsuario = async(req = request, res = response) => {
 
 const actualizarUsuario = async(req = request, res = response) => {
 
+    const { nombre, correo } = req.body;
+
+    let query = 'UPDATE Usuarios SET ';
+
+    if (nombre) {
+       query += `nombre = ${ nombre }, `;
+    }
+
+    if (correo) {
+        query += `correo = ${ correo }`;
+    }
+
+    const { recordset } = await sql.query( query );
+
+    
+    const result = {
+        result: recordset[0]
+    };
+
+    res.json( result );
+
 }
 
 const borrarUsuario = async(req = request, res = response) => {
