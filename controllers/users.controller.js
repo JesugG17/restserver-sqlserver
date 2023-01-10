@@ -52,25 +52,17 @@ const obtenerUsuario = async(req = request, res = response) => {
 const actualizarUsuario = async(req = request, res = response) => {
 
     const { nombre, correo } = req.body;
+    const id = req.params.id;
+    // console.log("CONTROLADOR");
 
-    let query = 'UPDATE Usuarios SET ';
+    let query = `UPDATE Usuarios SET nombre='${ nombre }', correo='${correo}' WHERE id=${ id }`;
+    await sql.query( query );
+    const { recordset } = await sql.query(`SELECT * FROM Usuarios WHERE id=${ id }`);
 
-    if (nombre) {
-       query += `nombre = ${ nombre }, `;
-    }
+    // console.log( data );
 
-    if (correo) {
-        query += `correo = ${ correo }`;
-    }
 
-    const { recordset } = await sql.query( query );
-
-    
-    const result = {
-        result: recordset[0]
-    };
-
-    res.json( result );
+    res.json( recordset );
 
 }
 

@@ -23,6 +23,7 @@ router.post('/',[
 
 router.put('/:id', [
     check('id').custom(existeIdUsuario),
+    check('correo', 'El correo es obligatorio').not().isEmpty(),
     check('correo', 'No es un correo valido').isEmail(),
     check('correo').custom( existeCorreo ),
     validarCampos
