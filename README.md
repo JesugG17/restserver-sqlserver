@@ -1,2 +1,2 @@
 # restserver-sqlserver
-Simples endpoints para experimentar con SQL dentro de javascript!
+Simples endpoints para experimentar con SQLServer dentro de javascript usando la libreria de mssql
